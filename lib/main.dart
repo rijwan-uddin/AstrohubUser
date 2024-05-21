@@ -1,8 +1,8 @@
+import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'firebase_options.dart';
 
 Future<void> main() async {
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: _buildShrineTheme(),
-      home: Placeholder(),
+      home: LoginPage(),
     );
   }
 }
