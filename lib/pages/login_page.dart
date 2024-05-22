@@ -18,8 +18,6 @@ class _LoginPageState extends State<LoginPage> {
   String _errMsg = '';
   AuthChoice _authChoice = AuthChoice.login;
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,7 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ],
               selected: {_authChoice},
-              onSelectionChanged: (choice){
+              onSelectionChanged: (choice) {
                 setState(() {
                   _authChoice = choice.first;
                 });
@@ -78,31 +76,59 @@ class _LoginPageState extends State<LoginPage> {
                 padding: EdgeInsets.all(8.0),
                 child: AnimatedCrossFade(
                   duration: Duration(microseconds: 500),
-                  crossFadeState: _authChoice == AuthChoice.login ?
-                  CrossFadeState.showFirst : CrossFadeState.showSecond,
-
+                  crossFadeState: _authChoice == AuthChoice.login
+                      ? CrossFadeState.showFirst
+                      : CrossFadeState.showSecond,
                   firstChild: LoginSection(
-                    onSuccess: (){},
-                    onFailure: (value){
+                    onSuccess: () {},
+                    onFailure: (value) {
                       setState(() {
                         _errMsg = value;
                       });
                     },
                   ),
                   secondChild: RegistrationSection(
-                    onSuccess: (){},
-                    onFailure:(value ){
+                    onSuccess: () {},
+                    onFailure: (value) {
                       setState(() {
-                        _errMsg = value ;
+                        _errMsg = value;
                       });
-                    } ,
+                    },
                   ),
                 ),
               ),
-            )
+            ),
+            if (_errMsg.isNotEmpty)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _errMsg,
+                  style: TextStyle(fontSize: 18, color: Colors.red),
+                ),
+              ),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'OR',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 18),
+              ),
+            ),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: kShrineBrown900,
+                foregroundColor: kShrineSurfaceWhite,
+              ),
+              onPressed: _signInWithGoogle,
+              icon: Icon(Icons.g_mobiledata),
+              label: Text('SIGN IN WITH GOOGLE'),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void _signInWithGoogle() {
   }
 }
