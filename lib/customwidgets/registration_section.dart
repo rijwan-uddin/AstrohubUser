@@ -1,10 +1,17 @@
+import 'package:astrohub_user/auth/auth_service.dart';
+import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 
 class RegistrationSection extends StatefulWidget {
   final VoidCallback onSuccess;
   final Function(String) onFailure;
-  const RegistrationSection({super.key, required this.onSuccess, required this.onFailure});
+
+  const RegistrationSection(
+      {super.key, required this.onSuccess, required this.onFailure});
 
   @override
   State<RegistrationSection> createState() => _RegistrationSectionState();
@@ -16,6 +23,7 @@ class _RegistrationSectionState extends State<RegistrationSection> {
   final _passwordController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
+
   @override
   void initState() {
     _emailController.text = 'user1gmail.com';
@@ -25,6 +33,7 @@ class _RegistrationSectionState extends State<RegistrationSection> {
 
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -34,33 +43,12 @@ class _RegistrationSectionState extends State<RegistrationSection> {
           Padding(
             padding: const EdgeInsets.all(4.0),
             child: TextFormField(
-              controller: _emailController,
-              keyboardType:TextInputType.emailAddress ,
-              decoration: InputDecoration(
-                prefixIcon: Icon(Icons.email),
-                labelText: 'Email Address',
-              ),
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Provide a valid email address';
-                }
-                return null;
-              },
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: TextFormField(
               controller: _nameController,
-
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.person),
-                labelText: 'Your Name',
+                labelText: 'Your Name (optional)',
               ),
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Provide a valid Name ';
-                }
+              validator: (value) {
                 return null;
               },
             ),
@@ -69,14 +57,28 @@ class _RegistrationSectionState extends State<RegistrationSection> {
             padding: const EdgeInsets.all(4.0),
             child: TextFormField(
               controller: _phoneController,
-              keyboardType:TextInputType.phone,
+              keyboardType: TextInputType.phone,
               decoration: InputDecoration(
                 prefixIcon: Icon(Icons.phone),
-                labelText: 'Phone Number',
+                labelText: 'Phone Number (optional)',
               ),
-              validator: (value){
-                if(value == null || value.isEmpty){
-                  return 'Provide a phone number';
+              validator: (value) {
+                return null;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: TextFormField(
+              controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
+              decoration: InputDecoration(
+                prefixIcon: Icon(Icons.email),
+                labelText: 'Email Address',
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Provide a valid email address';
                 }
                 return null;
               },
@@ -91,8 +93,8 @@ class _RegistrationSectionState extends State<RegistrationSection> {
                 prefixIcon: Icon(Icons.lock),
                 labelText: 'Password',
               ),
-              validator: (value){
-                if(value == null || value.isEmpty){
+              validator: (value) {
+                if (value == null || value.isEmpty) {
                   return 'Provide a valid password address';
                 }
                 return null;
@@ -112,12 +114,30 @@ class _RegistrationSectionState extends State<RegistrationSection> {
           )
         ],
       ),
-
     );
   }
 
-  void _register() {
+  void _register() async {
+    if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Please wait');
+      final name = _nameController.text;
+      final phone = _phoneController.text;
+      final email = _emailController.text;
+      final password = _passwordController.text;
+
+      try {
+        final user = await AuthService.register(email, password);
+        await Provider.of<UserProvider>(context, listen: false)
+            .addUser(user: user, name: name, phone: phone);
+        EasyLoading.dismiss();
+        widget.onSuccess();
+      } on FirebaseAuthException catch (error) {
+        EasyLoading.dismiss();
+        widget.onFailure(error.message!);
+      }
+    }
   }
+
   @override
   void dispose() {
     _emailController.dispose();
