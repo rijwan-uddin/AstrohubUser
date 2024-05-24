@@ -6,7 +6,12 @@ class AuthService {
   static User? get currentUser => _auth.currentUser;
 
   static Future<User> register(String email, String password) async{
-   final credential =  await _auth.signInWithEmailAndPassword(email: email, password: password);
+   final credential =  await _auth.createUserWithEmailAndPassword(email: email, password: password);
    return credential.user!;
+  }
+
+  static Future<User> login(String email, String password) async{
+    final credential =  await _auth.signInWithEmailAndPassword(email: email, password: password);
+    return credential.user!;
   }
 }

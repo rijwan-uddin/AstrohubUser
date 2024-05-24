@@ -81,7 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                       ? CrossFadeState.showFirst
                       : CrossFadeState.showSecond,
                   firstChild: LoginSection(
-                    onSuccess: () {},
+                    onSuccess: () {
+                      showMsg(context, 'Login Successful');
+
+                    },
                     onFailure: (value) {
                       setState(() {
                         _errMsg = value;

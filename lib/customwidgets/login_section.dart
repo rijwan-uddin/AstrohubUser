@@ -1,5 +1,9 @@
 import 'package:astrohub_user/utils/colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../auth/auth_service.dart';
 
 class LoginSection extends StatefulWidget {
   final VoidCallback onSuccess;
@@ -79,6 +83,20 @@ class _LoginSectionState extends State<LoginSection> {
   }
 
   void _login() async {
+    if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Please wait');
+      final email = _emailController.text;
+      final password = _passwordController.text;
+
+      try {
+        await AuthService.login(email, password);
+        EasyLoading.dismiss();
+        widget.onSuccess();
+      } on FirebaseAuthException catch (error) {
+        EasyLoading.dismiss();
+        widget.onFailure(error.message!);
+      }
+    }
   }
   @override
   void dispose() {
