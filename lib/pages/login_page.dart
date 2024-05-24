@@ -1,6 +1,7 @@
 import 'package:astrohub_user/customwidgets/login_section.dart';
 import 'package:astrohub_user/customwidgets/registration_section.dart';
 import 'package:astrohub_user/utils/colors.dart';
+import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
 
 enum AuthChoice { login, register }
@@ -88,7 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                     },
                   ),
                   secondChild: RegistrationSection(
-                    onSuccess: () {},
+                    onSuccess: () {
+                      showMsg(context, 'Registration Successful');
+                    },
                     onFailure: (value) {
                       setState(() {
                         _errMsg = value;

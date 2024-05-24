@@ -26,7 +26,7 @@ class _RegistrationSectionState extends State<RegistrationSection> {
 
   @override
   void initState() {
-    _emailController.text = 'user1gmail.com';
+    _emailController.text = 'user1@gmail.com';
     _passwordController.text = '123456';
     _nameController.text = 'ABC';
     _phoneController.text = '01777777777';
@@ -109,7 +109,7 @@ class _RegistrationSectionState extends State<RegistrationSection> {
                 backgroundColor: kShrineBrown900,
                 foregroundColor: kShrineSurfaceWhite,
               ),
-              child: Text('SIGN IN'),
+              child: Text('SIGN UP'),
             ),
           )
         ],

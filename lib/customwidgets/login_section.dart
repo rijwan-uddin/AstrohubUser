@@ -17,7 +17,7 @@ class _LoginSectionState extends State<LoginSection> {
   final _passwordController = TextEditingController();
   @override
   void initState() {
-    _emailController.text = 'user1gmail.com';
+    _emailController.text = 'user1@gmail.com';
     _passwordController.text = '123456';
     super.initState();
   }
