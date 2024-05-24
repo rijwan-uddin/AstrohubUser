@@ -1,11 +1,14 @@
 import 'dart:js';
 
+import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/login_page.dart';
+import 'package:astrohub_user/pages/view_telescope_page.dart';
 import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -17,11 +20,11 @@ Future<void> main() async {
   );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
-  ], child: const MyApp()));
+  ], child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   ThemeData _buildShrineTheme() {
     final ThemeData base = ThemeData.light(useMaterial3: true);
@@ -64,11 +67,34 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       theme: _buildShrineTheme(),
       builder: EasyLoading.init(),
-      home: LoginPage(),
+      routerConfig: _router,
     );
   }
+
+  final _router = GoRouter(
+      initialLocation: ViewTelescopePage.routeName,
+      debugLogDiagnostics: true,
+      redirect: (context, state) {
+        if (AuthService.currentUser == null) {
+          return LoginPage.routeName;
+        }
+        return null;
+      },
+      routes: [
+        GoRoute(
+          name: LoginPage.routeName,
+          path: LoginPage.routeName,
+          builder: (context, state) => LoginPage(),
+        ),
+        GoRoute(
+          name: ViewTelescopePage.routeName,
+          path: ViewTelescopePage.routeName,
+          builder: (context, state) => ViewTelescopePage(),
+        )
+      ]
+  );
 }

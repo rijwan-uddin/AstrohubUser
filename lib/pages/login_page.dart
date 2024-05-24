@@ -1,8 +1,10 @@
 import 'package:astrohub_user/customwidgets/login_section.dart';
 import 'package:astrohub_user/customwidgets/registration_section.dart';
+import 'package:astrohub_user/pages/view_telescope_page.dart';
 import 'package:astrohub_user/utils/colors.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 enum AuthChoice { login, register }
 
@@ -83,6 +85,7 @@ class _LoginPageState extends State<LoginPage> {
                   firstChild: LoginSection(
                     onSuccess: () {
                       showMsg(context, 'Login Successful');
+                      context.goNamed(ViewTelescopePage.routeName);
 
                     },
                     onFailure: (value) {
