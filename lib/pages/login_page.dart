@@ -1,10 +1,14 @@
+import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/customwidgets/login_section.dart';
 import 'package:astrohub_user/customwidgets/registration_section.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
+import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 enum AuthChoice { login, register }
 
@@ -86,7 +90,6 @@ class _LoginPageState extends State<LoginPage> {
                     onSuccess: () {
                       showMsg(context, 'Login Successful');
                       context.goNamed(ViewTelescopePage.routeName);
-
                     },
                     onFailure: (value) {
                       setState(() {
@@ -138,6 +141,21 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  void _signInWithGoogle() {
+  void _signInWithGoogle() async {
+    final credential = await AuthService.signInWithGoogle();
+    final exists = await Provider.of<UserProvider>(context, listen: false)
+        .doesUserExist(credential.user!.uid);
+    if (!exists) {
+      EasyLoading.show(status: 'Please wait');
+      await Provider.of<UserProvider>(context, listen: false).addUser(
+        user: credential.user!,
+        name: credential.user!.displayName,
+        phone: credential.user!.phoneNumber,
+      );
+    }
+    if(EasyLoading.isShow){
+      EasyLoading.dismiss();
+    }
+    context.goNamed(ViewTelescopePage.routeName);
   }
 }

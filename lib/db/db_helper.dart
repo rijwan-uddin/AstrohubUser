@@ -13,4 +13,11 @@ class DbHelper {
         .doc(appUser.uid)
         .set(appUser.toJson());
   }
+
+  static Future<bool> doesUserExist(String uid) async {
+    final snapshot = await _db.collection(collectionUser).doc(uid).get();
+    return snapshot.exists;
+
+
+  }
 }

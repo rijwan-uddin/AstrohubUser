@@ -15,4 +15,6 @@ class UserProvider extends ChangeNotifier {
     );
     return DbHelper.addUser(appUser);
   }
+
+  Future<bool> doesUserExist(String uid) => DbHelper.doesUserExist(uid);
 }
