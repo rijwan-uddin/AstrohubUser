@@ -3,6 +3,7 @@ import 'dart:js';
 import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
+import 'package:astrohub_user/providers/telescope_provider.dart';
 import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ Future<void> main() async {
   );
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
+    ChangeNotifierProvider(create: (context) => TelescopeProvider()),
   ], child: MyApp()));
 }
 
