@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../customwidgets/telescope_grid_item_view.dart';
 import '../providers/telescope_provider.dart';
 
 class ViewTelescopePage extends StatefulWidget {
@@ -32,14 +33,21 @@ class _ViewTelescopePageState extends State<ViewTelescopePage> {
       appBar: AppBar(
         title: Text('Telescopes '),
         actions: [
-          IconButton(
-            onPressed: () {
-              AuthService.logout()
-                  .then((value) => context.goNamed(LoginPage.routeName));
-            },
-            icon: Icon(Icons.logout),
-          ),
+
         ],
+      ),
+      body: Consumer<TelescopeProvider>(
+        builder: (context, provider ,child) => GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 0.8,
+          ),
+          itemCount: provider.telescopeList.length,
+          itemBuilder: (context ,index){
+            final telescope = provider.telescopeList[index];
+            return TelescopeGridItemView(telescope: telescope);
+          },
+        ),
       ),
     );
   }

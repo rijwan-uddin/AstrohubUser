@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
