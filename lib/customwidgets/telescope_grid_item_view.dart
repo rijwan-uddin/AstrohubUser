@@ -14,7 +14,9 @@ class TelescopeGridItemView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        
+      },
       child: Card(
         child: Stack(
           children: [
