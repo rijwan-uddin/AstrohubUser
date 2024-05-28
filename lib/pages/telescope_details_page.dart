@@ -9,6 +9,7 @@ import '../utils/constants.dart';
 class TelescopeDetailsPage extends StatefulWidget {
   static const String routeName = 'productdetails';
   final String id;
+
   const TelescopeDetailsPage({super.key, required this.id});
 
   @override
@@ -19,34 +20,40 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
   late Telescope telescope;
   late TelescopeProvider provider;
   double userRating = 0.0;
+
   @override
   void didChangeDependencies() {
     telescope = provider.findTelescopeById(widget.id);
     super.didChangeDependencies();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(telescope.model , style: TextStyle(overflow: TextOverflow.ellipsis),),),
-    body: ListView(
-      children: [
-        CachedNetworkImage(
-          width:double.infinity,
-          height:200,
-          imageUrl: telescope.thumbnail.downloadUrl,
-          placeholder: (context, url) => Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) => Icon(Icons.error),
+      appBar: AppBar(
+        title: Text(
+          telescope.model,
+          style: TextStyle(overflow: TextOverflow.ellipsis),
         ),
-        ListTile(
-          title: Text('Sale Price : $currencySymbol${priceAfterDiscount}'),
-          subtitle: Text('stock ${telescope.stock}'),
-        )
-
-      ],
-    ),
-
+      ),
+      body: ListView(
+        children: [
+          CachedNetworkImage(
+            width: double.infinity,
+            height: 200,
+            imageUrl: telescope.thumbnail.downloadUrl,
+            placeholder: (context, url) => Center(
+              child: CircularProgressIndicator(),
+            ),
+            errorWidget: (context, url, error) => Icon(Icons.error),
+          ),
+          ListTile(
+            title: Text(
+                'Sale Price : $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
+            subtitle: Text('stock ${telescope.stock}'),
+          )
+        ],
+      ),
     );
   }
 }
