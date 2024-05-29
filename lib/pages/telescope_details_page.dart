@@ -1,9 +1,12 @@
 import 'package:astrohub_user/models/telescope.dart';
 import 'package:astrohub_user/providers/telescope_provider.dart';
+import 'package:astrohub_user/utils/colors.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/cart_provider.dart';
 import '../utils/constants.dart';
 
 class TelescopeDetailsPage extends StatefulWidget {
@@ -23,6 +26,9 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
 
   @override
   void didChangeDependencies() {
+    provider = Provider.of<TelescopeProvider>(
+      context,
+    );
     telescope = provider.findTelescopeById(widget.id);
     super.didChangeDependencies();
   }
@@ -47,11 +53,29 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
             ),
             errorWidget: (context, url, error) => Icon(Icons.error),
           ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30.0),
+            child: Consumer<CartProvider>(
+              builder: (context, provider, child) {
+                final isInCart = provider.isTelescopeInCart(telescope.id!);
+
+                  return ElevatedButton.icon(
+                  onPressed: () {},
+                  icon: Icon(isInCart ?Icons.remove_shopping_cart : Icons.shopping_cart),
+                  label: Text(isInCart ? 'Remove from cart' :'Add to cart'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor:isInCart? kShrineBrown900 : kShrinePink400,
+                    foregroundColor: isInCart? kShrinePink100 : kShrinePink50,
+                  ),
+                );
+              },
+            ),
+          ),
           ListTile(
             title: Text(
                 'Sale Price : $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
             subtitle: Text('stock ${telescope.stock}'),
-          )
+          ),
         ],
       ),
     );

@@ -1,6 +1,8 @@
 import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/login_page.dart';
+import 'package:astrohub_user/pages/telescope_details_page.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
+import 'package:astrohub_user/providers/cart_provider.dart';
 import 'package:astrohub_user/providers/telescope_provider.dart';
 import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
@@ -20,6 +22,7 @@ Future<void> main() async {
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (context) => UserProvider()),
     ChangeNotifierProvider(create: (context) => TelescopeProvider()),
+    ChangeNotifierProvider(create: (context) => CartProvider()),
   ], child: MyApp()));
 }
 
@@ -94,7 +97,14 @@ class MyApp extends StatelessWidget {
           name: ViewTelescopePage.routeName,
           path: ViewTelescopePage.routeName,
           builder: (context, state) => ViewTelescopePage(),
-        )
+          routes: [
+            GoRoute(
+              name: TelescopeDetailsPage.routeName,
+              path: TelescopeDetailsPage.routeName,
+              builder: (context, state) => TelescopeDetailsPage(id: state.extra! as String,),
+            ),
+          ]
+        ),
       ]
   );
 }

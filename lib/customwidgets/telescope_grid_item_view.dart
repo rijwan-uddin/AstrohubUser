@@ -1,8 +1,10 @@
+import 'package:astrohub_user/pages/telescope_details_page.dart';
 import 'package:astrohub_user/utils/constants.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:go_router/go_router.dart';
 
 import '../models/telescope.dart';
 
@@ -15,7 +17,7 @@ class TelescopeGridItemView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        
+        context.goNamed(TelescopeDetailsPage.routeName, extra: telescope.id);
       },
       child: Card(
         child: Stack(
