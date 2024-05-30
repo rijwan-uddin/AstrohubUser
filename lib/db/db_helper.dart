@@ -52,6 +52,10 @@ class DbHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllTelescopes() =>
       _db.collection(collectionTelescope).snapshots();
 
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItems(String uid) =>
+      _db.collection(collectionUser).doc(uid).collection(collectionCart).snapshots();
+
   static Future<void> addTelescope(Telescope telescope) {
     final doc = _db.collection(collectionTelescope).doc();
     telescope.id = doc.id;

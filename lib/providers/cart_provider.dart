@@ -8,6 +8,16 @@ import 'package:flutter/foundation.dart';
 class CartProvider with ChangeNotifier {
   List<CartModel> cartList = [];
 
+
+  getAllCartItems() {
+    DbHelper.getAllCartItems( AuthService.currentUser!.uid).listen((snapshot) {
+      cartList = List.generate(snapshot.docs.length,
+              (index) => CartModel.fromJson(snapshot.docs[index].data()));
+      notifyListeners();
+    });
+  }
+
+
   bool isTelescopeInCart(String id) {
     bool tag = false;
     for (final cartModel in cartList) {
