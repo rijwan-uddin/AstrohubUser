@@ -60,7 +60,14 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
                 final isInCart = provider.isTelescopeInCart(telescope.id!);
 
                   return ElevatedButton.icon(
-                  onPressed: () {},
+                  onPressed: () {
+                    if(isInCart) {
+                      provider.removeFromCart(telescope.id!);
+                    } else {
+                      provider.addToCart(telescope);
+                    }
+                    
+                  },
                   icon: Icon(isInCart ?Icons.remove_shopping_cart : Icons.shopping_cart),
                   label: Text(isInCart ? 'Remove from cart' :'Add to cart'),
                   style: ElevatedButton.styleFrom(
