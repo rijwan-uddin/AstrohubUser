@@ -2,6 +2,7 @@ import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../pages/cart_page.dart';
 import '../pages/login_page.dart';
 
 class MainDrawer extends StatelessWidget {
@@ -22,7 +23,11 @@ class MainDrawer extends StatelessWidget {
             title: Text('My Profile'),
           ),
          ListTile(
-            onTap: (){},
+            onTap: (){
+              context.pop();
+            context.goNamed(CartPage.routeName);
+
+            },
             leading: Icon(Icons.add_shopping_cart),
             title: Text('My Cart'),
           ),

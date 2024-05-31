@@ -1,4 +1,5 @@
 import 'package:astrohub_user/auth/auth_service.dart';
+import 'package:astrohub_user/pages/cart_page.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/pages/telescope_details_page.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
@@ -102,6 +103,11 @@ class MyApp extends StatelessWidget {
               name: TelescopeDetailsPage.routeName,
               path: TelescopeDetailsPage.routeName,
               builder: (context, state) => TelescopeDetailsPage(id: state.extra! as String,),
+            ),
+            GoRoute(
+              name: CartPage.routeName,
+              path: CartPage.routeName,
+              builder: (context, state) => CartPage(),
             ),
           ]
         ),
