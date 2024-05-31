@@ -40,16 +40,17 @@ class _CartPageState extends State<CartPage> {
                   children: [
                     Expanded(
                       child: Text(
-                        'Sub Total : $currencySymbol',
+                        'Sub Total : $currencySymbol${provider.getCartSubTotal()}',
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                     ),
-                    OutlinedButton(onPressed: (){}, child: Text('Checkout'),
+                    OutlinedButton(onPressed: provider.totalItemsInCart == 0  ? null : (){},
+                      child: Text('Checkout'),
                     ),
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

@@ -38,7 +38,10 @@ class CartItemView extends StatelessWidget {
             Row(
               children: [
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.decreaseQuantity(cartModel);
+
+                  },
                   icon: Icon(
                     Icons.remove_circle,
                     size: 30,
@@ -53,14 +56,16 @@ class CartItemView extends StatelessWidget {
 
                 ),
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    provider.increaseQuantity(cartModel);
+                  },
                   icon: Icon(
                     Icons.add_circle,
                     size: 30,
                   ),
                 ),
                 const Spacer(),
-              Text('$currencySymbol',  style: Theme.of(context).textTheme.titleLarge,)
+              Text('$currencySymbol${ provider.priceWithQuantity(cartModel)}',  style: Theme.of(context).textTheme.titleLarge,)
               ],
             )
           ],

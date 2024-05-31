@@ -65,4 +65,13 @@ class DbHelper {
   Future<void> updateTelescopeField(id, Map<String, dynamic> map) {
     return _db.collection(collectionTelescope).doc(id).update(map);
   }
+
+  static Future<void> updateCartQuantity(String uid, CartModel model) {
+    return _db
+        .collection(collectionUser)
+        .doc(uid)
+        .collection(collectionCart)
+        .doc(model.telescopeId)
+        .set(model.toJson());
+  }
 }
