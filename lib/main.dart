@@ -1,9 +1,11 @@
 import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/cart_page.dart';
+import 'package:astrohub_user/pages/checkout_page.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/pages/telescope_details_page.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
 import 'package:astrohub_user/providers/cart_provider.dart';
+import 'package:astrohub_user/providers/order_provider.dart';
 import 'package:astrohub_user/providers/telescope_provider.dart';
 import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:astrohub_user/utils/colors.dart';
@@ -24,6 +26,7 @@ Future<void> main() async {
     ChangeNotifierProvider(create: (context) => UserProvider()),
     ChangeNotifierProvider(create: (context) => TelescopeProvider()),
     ChangeNotifierProvider(create: (context) => CartProvider()),
+    ChangeNotifierProvider(create: (context) => OrderProvider()),
   ], child: MyApp()));
 }
 
@@ -108,6 +111,13 @@ class MyApp extends StatelessWidget {
               name: CartPage.routeName,
               path: CartPage.routeName,
               builder: (context, state) => CartPage(),
+              routes: [
+                GoRoute(
+                  name: CheckoutPage.routeName,
+                  path: CheckoutPage.routeName,
+                  builder: (context, state) => CheckoutPage(),
+                ),
+              ]
             ),
           ]
         ),
