@@ -2,7 +2,9 @@ import 'package:astrohub_user/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
+import '../models/user_address.dart';
 import '../providers/cart_provider.dart';
+import '../providers/user_provider.dart';
 import '../utils/colors.dart';
 import '../utils/helper_functions.dart';
 
@@ -207,6 +209,14 @@ class _CheckoutPageState extends State<CheckoutPage> {
     }
 
     EasyLoading.show(status: 'Please wait');
+
+    final userAddress = UserAddress(
+      streetAddress: addressController.text,
+      city: city!,
+      postCode: postalCodeController.text,
+    );
+    final appUser = Provider.of<UserProvider>(context , listen: false).appUser;
+    appUser!.userAddress=userAddress;
   }
 }
-
+//203 7.30

@@ -1,3 +1,4 @@
+import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/db/db_helper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -5,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../models/app_user.dart';
 
 class UserProvider extends ChangeNotifier {
+  AppUser? appUser;
   Future<void> addUser({required User user, String? name, String? phone}) {
     final appUser = AppUser(
       uid: user.uid,
@@ -14,6 +16,14 @@ class UserProvider extends ChangeNotifier {
       userCreationTime: Timestamp.fromDate(user.metadata.creationTime!),
     );
     return DbHelper.addUser(appUser);
+  }
+  getUserInfo(){
+    DbHelper.getUserInfo(AuthService.currentUser!.uid).listen((event) {
+      if(event.exists){
+        appUser = AppUser.fromJson(event.data()!);
+        notifyListeners();
+      }
+    });
   }
 
   Future<bool> doesUserExist(String uid) => DbHelper.doesUserExist(uid);

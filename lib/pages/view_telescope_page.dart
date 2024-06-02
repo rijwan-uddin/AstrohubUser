@@ -2,6 +2,7 @@ import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/customwidgets/main_drawer.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/providers/cart_provider.dart';
+import 'package:astrohub_user/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ class _ViewTelescopePageState extends State<ViewTelescopePage> {
    Provider.of<TelescopeProvider>(context ,listen: false).getAllBrands();
    Provider.of<TelescopeProvider>(context ,listen: false).getAllTelescopes();
    Provider.of<CartProvider>(context ,listen: false).getAllCartItems();
+   Provider.of<UserProvider>(context ,listen: false).getUserInfo();
     super.didChangeDependencies();
   }
   @override
