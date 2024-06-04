@@ -1,4 +1,7 @@
+import 'package:astrohub_user/models/order_model.dart';
+import 'package:astrohub_user/providers/order_provider.dart';
 import 'package:astrohub_user/utils/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
@@ -217,6 +220,20 @@ class _CheckoutPageState extends State<CheckoutPage> {
     );
     final appUser = Provider.of<UserProvider>(context , listen: false).appUser;
     appUser!.userAddress=userAddress;
+    final order =OrderModel(
+        orderId: generateOrderId,
+        appUser: appUser,
+        orderStatus: OrderStatus.pending,
+        paymentMethod: paymentMethodGroupValue,
+        totalAmount: Provider.of<CartProvider>(context,listen:false).getCartSubTotal(),
+        orderDate: Timestamp.fromDate(DateTime.now()),
+        itemDetails: Provider.of<CartProvider>(context,listen:false).cartList,
+    );
+    try{
+      Provider.of<OrderProvider>(context,listen: false).saveOrder(order)
+    }catch(error){
+
+    }
   }
 }
 //203 7.30
