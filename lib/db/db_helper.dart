@@ -89,7 +89,9 @@ class DbHelper {
         .set(order.toJson());
   }
   static Future<void> clearCart(String uid,List<CartModel> cartList){
-
+    return _db.collection(collectionOrder)
+        .doc(order.orderId)
+        .set(order.toJson());
   }
 }
 //13.35
