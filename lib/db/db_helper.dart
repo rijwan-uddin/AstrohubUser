@@ -88,7 +88,7 @@ class DbHelper {
         .doc(order.orderId)
         .set(order.toJson());
   }
-  static Future<void> clearCart(String uid,List<CartModel> cartList)async {
+  static Future<void> clearCart(String uid,List<CartModel> cartList){
 
   }
 }
