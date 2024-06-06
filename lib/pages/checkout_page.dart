@@ -260,7 +260,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
 
   void _setAddress() {
 final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
-
+if(appUser !=null && appUser.userAddress !=null){
+  final address = appUser.userAddress!;
+  addressController.text =address.streetAddress;
+  postalCodeController.text = address.postCode;
+  city = address.city;
+}
   }
 }
 //203 7.30
