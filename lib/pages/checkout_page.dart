@@ -28,6 +28,12 @@ class _CheckoutPageState extends State<CheckoutPage> {
   final addressController = TextEditingController();
   final postalCodeController = TextEditingController();
 
+@override
+  void didChangeDependencies() {
+    _setAddress();
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -250,6 +256,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
     } catch (error) {
       EasyLoading.dismiss();
     }
+  }
+
+  void _setAddress() {
+final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
+
   }
 }
 //203 7.30
