@@ -248,7 +248,7 @@ class _CheckoutPageState extends State<CheckoutPage> {
       showMsg(context, 'Order Placed');
       context.goNamed(ViewTelescopePage.routeName);
     } catch (error) {
-
+      EasyLoading.dismiss();
     }
   }
 }

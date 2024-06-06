@@ -86,11 +86,19 @@ class DbHelper {
         .set(model.toJson());
   }
 
-  static Future<void> saveOrder(OrderModel order) {
-    return _db
-        .collection(collectionOrder)
-        .doc(order.orderId)
-        .set(order.toJson());
+  static Future<void> saveOrder(OrderModel order) async {
+   final wb = _db.batch();
+   final orderDoc = _db.collection(collectionOrder).doc(order.orderId);
+   wb.set(orderDoc, order.toJson());
+   for(final cartModel in order.itemDetails) {
+     final telSnap = await _db.collection(collectionTelescope).doc(cartModel.telescopeId).get();
+     final prevStock = telSnap.data()!['stock'];
+     final telDoc = _db.collection(collectionTelescope).doc(cartModel.telescopeId);
+     wb.update(telDoc, {'stock' : prevStock -  cartModel.quantity});
+   }
+   final userDoc = _db.collection(collectionUser).doc(order.appUser.uid);
+   wb.set(userDoc, order.appUser.toJson());
+   return wb.commit();
   }
 
   static Future<void> clearCart(String uid, List<CartModel> cartList) {
