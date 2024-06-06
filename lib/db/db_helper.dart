@@ -28,6 +28,7 @@ class DbHelper {
         .doc(cartModel.telescopeId)
         .set(cartModel.toJson());
   }
+
   static Future<void> removeFromCart(String telId, String uid) {
     return _db
         .collection(collectionUser)
@@ -54,15 +55,17 @@ class DbHelper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllTelescopes() =>
       _db.collection(collectionTelescope).snapshots();
 
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItems(
+          String uid) =>
+      _db
+          .collection(collectionUser)
+          .doc(uid)
+          .collection(collectionCart)
+          .snapshots();
 
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCartItems(String uid) =>
-      _db.collection(collectionUser).doc(uid).collection(collectionCart).snapshots();
-
-
-  static Stream<DocumentSnapshot <Map<String, dynamic>>> getUserInfo(String uid) =>
+  static Stream<DocumentSnapshot<Map<String, dynamic>>> getUserInfo(
+          String uid) =>
       _db.collection(collectionUser).doc(uid).snapshots();
-
-
 
   static Future<void> addTelescope(Telescope telescope) {
     final doc = _db.collection(collectionTelescope).doc();
@@ -84,14 +87,23 @@ class DbHelper {
   }
 
   static Future<void> saveOrder(OrderModel order) {
-    return _db.collection(collectionOrder)
+    return _db
+        .collection(collectionOrder)
         .doc(order.orderId)
         .set(order.toJson());
   }
-  static Future<void> clearCart(String uid,List<CartModel> cartList){
-    return _db.collection(collectionOrder)
-        .doc(order.orderId)
-        .set(order.toJson());
+
+  static Future<void> clearCart(String uid, List<CartModel> cartList) {
+    final wb = _db.batch();
+    for (final model in cartList) {
+      final doc = _db
+          .collection(collectionUser)
+          .doc(uid)
+          .collection(collectionCart)
+          .doc(model.telescopeId);
+      wb.delete(doc);
+    }
+    return wb.commit();
   }
 }
 //13.35

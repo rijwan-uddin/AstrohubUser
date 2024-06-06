@@ -61,5 +61,6 @@ class CartProvider with ChangeNotifier {
     }
     return total;
   }
-
+Future<void> clearCart() => DbHelper.clearCart(AuthService.currentUser!.uid,
+cartList);
 }

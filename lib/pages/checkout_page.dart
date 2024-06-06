@@ -1,9 +1,11 @@
 import 'package:astrohub_user/models/order_model.dart';
+import 'package:astrohub_user/pages/view_telescope_page.dart';
 import 'package:astrohub_user/providers/order_provider.dart';
 import 'package:astrohub_user/utils/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import '../models/user_address.dart';
 import '../providers/cart_provider.dart';
@@ -81,19 +83,22 @@ class _CheckoutPageState extends State<CheckoutPage> {
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: Consumer<CartProvider>(
-          builder: (context, provider, child) => Column(
-            children: provider.cartList
-                .map((cartModel) => ListTile(
-              title: Text(cartModel.telescopeModel),
-              trailing: Text(
-                '${cartModel.quantity}x$currencySymbol${cartModel.price}',
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
+          builder: (context, provider, child) =>
+              Column(
+                children: provider.cartList
+                    .map((cartModel) =>
+                    ListTile(
+                      title: Text(cartModel.telescopeModel),
+                      trailing: Text(
+                        '${cartModel.quantity}x$currencySymbol${cartModel
+                            .price}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ))
+                    .toList(),
               ),
-            ))
-                .toList(),
-          ),
         ),
       ),
     );
@@ -106,12 +111,13 @@ class _CheckoutPageState extends State<CheckoutPage> {
           child: ListTile(
             title: const Text('Total Amount'),
             trailing: Consumer<CartProvider>(
-              builder: (context, provider, child) => Text(
-                '$currencySymbol${provider.getCartSubTotal()}',
-                style: const TextStyle(
-                  fontSize: 18,
-                ),
-              ),
+              builder: (context, provider, child) =>
+                  Text(
+                    '$currencySymbol${provider.getCartSubTotal()}',
+                    style: const TextStyle(
+                      fontSize: 18,
+                    ),
+                  ),
             ),
           ),
         ));
@@ -146,10 +152,11 @@ class _CheckoutPageState extends State<CheckoutPage> {
                 });
               },
               items: cities
-                  .map((city) => DropdownMenuItem<String>(
-                value: city,
-                child: Text(city),
-              ))
+                  .map((city) =>
+                  DropdownMenuItem<String>(
+                    value: city,
+                    child: Text(city),
+                  ))
                   .toList(),
             ),
           ],
@@ -218,20 +225,29 @@ class _CheckoutPageState extends State<CheckoutPage> {
       city: city!,
       postCode: postalCodeController.text,
     );
-    final appUser = Provider.of<UserProvider>(context , listen: false).appUser;
-    appUser!.userAddress=userAddress;
-    final order =OrderModel(
-        orderId: generateOrderId,
-        appUser: appUser,
-        orderStatus: OrderStatus.pending,
-        paymentMethod: paymentMethodGroupValue,
-        totalAmount: Provider.of<CartProvider>(context,listen:false).getCartSubTotal(),
-        orderDate: Timestamp.fromDate(DateTime.now()),
-        itemDetails: Provider.of<CartProvider>(context,listen:false).cartList,
+    final appUser = Provider
+        .of<UserProvider>(context, listen: false)
+        .appUser;
+    appUser!.userAddress = userAddress;
+    final order = OrderModel(
+      orderId: generateOrderId,
+      appUser: appUser,
+      orderStatus: OrderStatus.pending,
+      paymentMethod: paymentMethodGroupValue,
+      totalAmount: Provider.of<CartProvider>(context, listen: false)
+          .getCartSubTotal(),
+      orderDate: Timestamp.fromDate(DateTime.now()),
+      itemDetails: Provider
+          .of<CartProvider>(context, listen: false)
+          .cartList,
     );
-    try{
-      Provider.of<OrderProvider>(context,listen: false).saveOrder(order)
-    }catch(error){
+    try {
+      Provider.of<OrderProvider>(context, listen: false).saveOrder(order);
+      await Provider.of<CartProvider>(context, listen: false).clearCart();
+      EasyLoading.dismiss();
+      showMsg(context, 'Order Placed');
+      context.goNamed(ViewTelescopePage.routeName);
+    } catch (error) {
 
     }
   }
