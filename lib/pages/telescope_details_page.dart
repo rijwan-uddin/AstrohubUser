@@ -83,6 +83,21 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
                 'Sale Price : $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
             subtitle: Text('stock ${telescope.stock}'),
           ),
+          Card(
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Column(
+               children: [
+                RatingBar.builder(
+                  initialRating:0.0,
+                  minRating:0.0,
+                  direction:Axis.horizontal,
+                  AllowHalfRating:true,
+                )
+               ],
+              ),
+            ),
+          )
         ],
       ),
     );
