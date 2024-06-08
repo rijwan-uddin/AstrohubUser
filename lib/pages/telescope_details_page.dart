@@ -4,6 +4,7 @@ import 'package:astrohub_user/utils/colors.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
@@ -92,7 +93,15 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
                   initialRating:0.0,
                   minRating:0.0,
                   direction:Axis.horizontal,
-                  AllowHalfRating:true,
+                  allowHalfRating:true,
+                  itemCount:5,
+                  itemBuilder:(context,index) => Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate:(value){
+                    
+                  },
                 )
                ],
               ),
