@@ -4,10 +4,12 @@ import 'package:astrohub_user/utils/colors.dart';
 import 'package:astrohub_user/utils/helper_functions.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
+import '../providers/user_provider.dart';
 import '../utils/constants.dart';
 
 class TelescopeDetailsPage extends StatefulWidget {
@@ -100,9 +102,13 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
                     color: Colors.amber,
                   ),
                   onRatingUpdate:(value){
-                    
+                  userRating = value;
                   },
-                )
+                ),
+                 OutlinedButton(
+                   onPressed: _rateThisProduct,
+                   child: Text('SUBMIT'),
+                 )
                ],
               ),
             ),
@@ -111,5 +117,10 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
       ),
     );
   }
+
+  void _rateThisProduct() async {
+    EasyLoading.show(status:'please wait');
+    final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
+
+  }
 }
-//197 2:30
