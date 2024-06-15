@@ -6,9 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 
 import '../db/db_helper.dart';
+import '../models/app_user.dart';
 import '../models/brand.dart';
 import '../models/image_model.dart';
 import 'package:astrohub_user/utils/constants.dart';
+
+import '../models/rating_model.dart';
 class TelescopeProvider with ChangeNotifier {
   List<Brand> brandList = [];
   List<Telescope> telescopeList = [];
@@ -59,6 +62,11 @@ class TelescopeProvider with ChangeNotifier {
 
   }
 
+  Future<void> addRating(String id , AppUser appUser , num rating) async {
+    final ratingModel = RatingModel(appUser: appUser , rating: rating);
+    await DbHelper.addRating(id , ratingModel);
+  }
+
   Future<void> deleteImage(String id, ImageModel image) async {
     final photoRef = FirebaseStorage.instance.ref()
         .child('${image.directoryName}${image.imageName}');
@@ -68,3 +76,5 @@ class TelescopeProvider with ChangeNotifier {
 
 
 }
+
+//4.21 208

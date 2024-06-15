@@ -2,6 +2,7 @@ import 'package:astrohub_user/models/app_user.dart';
 import 'package:astrohub_user/models/brand.dart';
 import 'package:astrohub_user/models/cart_model.dart';
 import 'package:astrohub_user/models/order_model.dart';
+import 'package:astrohub_user/models/rating_model.dart';
 import 'package:astrohub_user/models/telescope.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,6 +13,7 @@ class DbHelper {
   static const String collectionBrand = 'Brands';
   static const String collectionCart = 'MyCartItems';
   static const String collectionOrder = 'Orders';
+  static const String collectionRating = 'Ratings';
 
   static Future<void> addUser(AppUser appUser) {
     return _db
@@ -113,5 +115,10 @@ class DbHelper {
     }
     return wb.commit();
   }
+
+  static Future<void>  addRating( String id , RatingModel ratingModel) {
+return  _db.collection(collectionTelescope).doc(id).collection(collectionRating).doc(ratingModel.appUser.uid)
+    .set(ratingModel.toJson());
+
+  }
 }
-//13.35
