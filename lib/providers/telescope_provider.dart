@@ -65,6 +65,15 @@ class TelescopeProvider with ChangeNotifier {
   Future<void> addRating(String id , AppUser appUser , num rating) async {
     final ratingModel = RatingModel(appUser: appUser , rating: rating);
     await DbHelper.addRating(id , ratingModel);
+    final snapshot = await DbHelper.getAllRatings(id);
+    final List<RatingModel> ratingList = List.generate(snapshot.docs.length,(index) => RatingModel.fromJson(snapshot.docs[index].data()));
+    num total = 0;
+    for(final rating in ratingList ){
+      total += rating.rating;
+
+    }
+   final avgRating = total / ratingList.length;
+    return DbHelper().updateTelescopeField(id, {'avgRating' : avgRating});
   }
 
   Future<void> deleteImage(String id, ImageModel image) async {
@@ -77,4 +86,3 @@ class TelescopeProvider with ChangeNotifier {
 
 }
 
-//4.21 208

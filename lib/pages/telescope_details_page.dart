@@ -121,6 +121,8 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
   void _rateThisProduct() async {
     EasyLoading.show(status:'please wait');
     final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
-
+await provider.addRating(telescope.id!, appUser!, userRating);
+EasyLoading.dismiss();
+showMsg(context, 'Thanks For rating');
   }
 }
