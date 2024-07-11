@@ -84,7 +84,7 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
           ListTile(
             title: Text(
                 'Sale Price : $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
-            subtitle: Text('stock ${telescope.stock}'),
+            subtitle: Text('Stock ${telescope.stock}'),
           ),
           Card(
             child: Padding(
@@ -119,10 +119,10 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
   }
 
   void _rateThisProduct() async {
-    EasyLoading.show(status:'please wait');
+    EasyLoading.show(status:'Please Wait');
     final appUser = Provider.of<UserProvider>(context, listen: false).appUser;
 await provider.addRating(telescope.id!, appUser!, userRating);
 EasyLoading.dismiss();
-showMsg(context, 'Thanks For rating');
+showMsg(context, 'Thanks For Rating');
   }
 }

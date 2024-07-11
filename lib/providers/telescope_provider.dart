@@ -1,10 +1,8 @@
 
 import 'dart:io';
-
 import 'package:astrohub_user/models/telescope.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
-
 import '../db/db_helper.dart';
 import '../models/app_user.dart';
 import '../models/brand.dart';
