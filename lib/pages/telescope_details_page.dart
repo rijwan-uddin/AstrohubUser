@@ -86,6 +86,10 @@ class _TelescopeDetailsPageState extends State<TelescopeDetailsPage> {
                 'Sale Price : $currencySymbol${priceAfterDiscount(telescope.price, telescope.discount)}'),
             subtitle: Text('Stock ${telescope.stock}'),
           ),
+          ListTile(
+            title: const Text('Description'),
+            subtitle: Text(telescope.description ?? 'Not Found'),
+          ),
           Card(
             child: Padding(
               padding: EdgeInsets.all(8.0),

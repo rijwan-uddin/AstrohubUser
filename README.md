@@ -1,1 +1,0 @@
-![user.jpg](..%2F..%2F01projecttest%2Fuser.jpg)
