@@ -124,4 +124,9 @@ return  _db.collection(collectionTelescope).doc(id).collection(collectionRating)
     .set(ratingModel.toJson());
 
   }
+  static Future<void> updateUserProfile(String uid, Map<String, String> map) {
+    return _db.collection(collectionUser)
+        .doc(uid)
+        .update(map);
+  }
 }

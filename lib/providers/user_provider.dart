@@ -27,4 +27,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   Future<bool> doesUserExist(String uid) => DbHelper.doesUserExist(uid);
+  Future<void> updateUserProfile({required String field, required String value}) {
+    return DbHelper.updateUserProfile(AuthService.currentUser!.uid, {field : value});
+  }
 }

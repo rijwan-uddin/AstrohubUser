@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../pages/cart_page.dart';
 import '../pages/login_page.dart';
+import '../pages/user_profile.dart';
 
 class MainDrawer extends StatelessWidget {
   const MainDrawer({super.key});
@@ -18,7 +19,10 @@ class MainDrawer extends StatelessWidget {
             height: 145,
           ),
           ListTile(
-            onTap: (){},
+            onTap: (){
+              context.pop();
+              context.goNamed(UserProfilePage.routeName);
+            },
             leading: Icon(Icons.person),
             title: Text('My Profile'),
           ),

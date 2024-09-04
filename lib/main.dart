@@ -3,6 +3,7 @@ import 'package:astrohub_user/pages/cart_page.dart';
 import 'package:astrohub_user/pages/checkout_page.dart';
 import 'package:astrohub_user/pages/login_page.dart';
 import 'package:astrohub_user/pages/telescope_details_page.dart';
+import 'package:astrohub_user/pages/user_profile.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
 import 'package:astrohub_user/providers/cart_provider.dart';
 import 'package:astrohub_user/providers/order_provider.dart';
@@ -106,6 +107,12 @@ class MyApp extends StatelessWidget {
               name: TelescopeDetailsPage.routeName,
               path: TelescopeDetailsPage.routeName,
               builder: (context, state) => TelescopeDetailsPage(id: state.extra! as String,),
+            ),
+            GoRoute(
+              name: UserProfilePage.routeName,
+              path: UserProfilePage.routeName,
+              builder: (context, state) => const UserProfilePage(),
+
             ),
             GoRoute(
               name: CartPage.routeName,
