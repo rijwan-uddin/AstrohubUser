@@ -15,7 +15,7 @@ class OrderModel with _$OrderModel {
     required String orderStatus,
     required String paymentMethod,
     required num  totalAmount,
-    @TimestampConverter() required Timestamp? orderDate,
+    @TimestampConverter() required Timestamp orderDate,
     required List<CartModel> itemDetails,
 }) =_OrderModel;
 

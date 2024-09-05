@@ -31,9 +31,9 @@ mixin _$OrderModel {
   num get totalAmount => throw _privateConstructorUsedError;
   set totalAmount(num value) => throw _privateConstructorUsedError;
   @TimestampConverter()
-  Timestamp? get orderDate => throw _privateConstructorUsedError;
+  Timestamp get orderDate => throw _privateConstructorUsedError;
   @TimestampConverter()
-  set orderDate(Timestamp? value) => throw _privateConstructorUsedError;
+  set orderDate(Timestamp value) => throw _privateConstructorUsedError;
   List<CartModel> get itemDetails => throw _privateConstructorUsedError;
   set itemDetails(List<CartModel> value) => throw _privateConstructorUsedError;
 
@@ -55,7 +55,7 @@ abstract class $OrderModelCopyWith<$Res> {
       String orderStatus,
       String paymentMethod,
       num totalAmount,
-      @TimestampConverter() Timestamp? orderDate,
+      @TimestampConverter() Timestamp orderDate,
       List<CartModel> itemDetails});
 
   $AppUserCopyWith<$Res> get appUser;
@@ -79,7 +79,7 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
     Object? orderStatus = null,
     Object? paymentMethod = null,
     Object? totalAmount = null,
-    Object? orderDate = freezed,
+    Object? orderDate = null,
     Object? itemDetails = null,
   }) {
     return _then(_value.copyWith(
@@ -103,10 +103,10 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
               as num,
-      orderDate: freezed == orderDate
+      orderDate: null == orderDate
           ? _value.orderDate
           : orderDate // ignore: cast_nullable_to_non_nullable
-              as Timestamp?,
+              as Timestamp,
       itemDetails: null == itemDetails
           ? _value.itemDetails
           : itemDetails // ignore: cast_nullable_to_non_nullable
@@ -137,7 +137,7 @@ abstract class _$$OrderModelImplCopyWith<$Res>
       String orderStatus,
       String paymentMethod,
       num totalAmount,
-      @TimestampConverter() Timestamp? orderDate,
+      @TimestampConverter() Timestamp orderDate,
       List<CartModel> itemDetails});
 
   @override
@@ -160,7 +160,7 @@ class __$$OrderModelImplCopyWithImpl<$Res>
     Object? orderStatus = null,
     Object? paymentMethod = null,
     Object? totalAmount = null,
-    Object? orderDate = freezed,
+    Object? orderDate = null,
     Object? itemDetails = null,
   }) {
     return _then(_$OrderModelImpl(
@@ -184,10 +184,10 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
               as num,
-      orderDate: freezed == orderDate
+      orderDate: null == orderDate
           ? _value.orderDate
           : orderDate // ignore: cast_nullable_to_non_nullable
-              as Timestamp?,
+              as Timestamp,
       itemDetails: null == itemDetails
           ? _value.itemDetails
           : itemDetails // ignore: cast_nullable_to_non_nullable
@@ -224,7 +224,7 @@ class _$OrderModelImpl implements _OrderModel {
   num totalAmount;
   @override
   @TimestampConverter()
-  Timestamp? orderDate;
+  Timestamp orderDate;
   @override
   List<CartModel> itemDetails;
 
@@ -254,7 +254,7 @@ abstract class _OrderModel implements OrderModel {
       required String orderStatus,
       required String paymentMethod,
       required num totalAmount,
-      @TimestampConverter() required Timestamp? orderDate,
+      @TimestampConverter() required Timestamp orderDate,
       required List<CartModel> itemDetails}) = _$OrderModelImpl;
 
   factory _OrderModel.fromJson(Map<String, dynamic> json) =
@@ -277,9 +277,9 @@ abstract class _OrderModel implements OrderModel {
   set totalAmount(num value);
   @override
   @TimestampConverter()
-  Timestamp? get orderDate;
+  Timestamp get orderDate;
   @TimestampConverter()
-  set orderDate(Timestamp? value);
+  set orderDate(Timestamp value);
   @override
   List<CartModel> get itemDetails;
   set itemDetails(List<CartModel> value);

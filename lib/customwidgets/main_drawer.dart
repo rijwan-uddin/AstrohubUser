@@ -1,4 +1,5 @@
 import 'package:astrohub_user/auth/auth_service.dart';
+import 'package:astrohub_user/pages/my_order.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -36,7 +37,10 @@ class MainDrawer extends StatelessWidget {
             title: Text('My Cart'),
           ),
           ListTile(
-            onTap: (){},
+            onTap: (){
+              context.pop();
+              context.goNamed(OrderPage.routeName);
+            },
             leading: Icon(Icons.monetization_on),
             title: Text('My Orders'),
           ),

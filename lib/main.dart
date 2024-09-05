@@ -2,6 +2,7 @@ import 'package:astrohub_user/auth/auth_service.dart';
 import 'package:astrohub_user/pages/cart_page.dart';
 import 'package:astrohub_user/pages/checkout_page.dart';
 import 'package:astrohub_user/pages/login_page.dart';
+import 'package:astrohub_user/pages/my_order.dart';
 import 'package:astrohub_user/pages/telescope_details_page.dart';
 import 'package:astrohub_user/pages/user_profile.dart';
 import 'package:astrohub_user/pages/view_telescope_page.dart';
@@ -99,35 +100,38 @@ class MyApp extends StatelessWidget {
           builder: (context, state) => LoginPage(),
         ),
         GoRoute(
-          name: ViewTelescopePage.routeName,
-          path: ViewTelescopePage.routeName,
-          builder: (context, state) => ViewTelescopePage(),
-          routes: [
-            GoRoute(
-              name: TelescopeDetailsPage.routeName,
-              path: TelescopeDetailsPage.routeName,
-              builder: (context, state) => TelescopeDetailsPage(id: state.extra! as String,),
-            ),
-            GoRoute(
-              name: UserProfilePage.routeName,
-              path: UserProfilePage.routeName,
-              builder: (context, state) => const UserProfilePage(),
-
-            ),
-            GoRoute(
-              name: CartPage.routeName,
-              path: CartPage.routeName,
-              builder: (context, state) => CartPage(),
-              routes: [
-                GoRoute(
-                  name: CheckoutPage.routeName,
-                  path: CheckoutPage.routeName,
-                  builder: (context, state) => CheckoutPage(),
+            name: ViewTelescopePage.routeName,
+            path: ViewTelescopePage.routeName,
+            builder: (context, state) => ViewTelescopePage(),
+            routes: [
+              GoRoute(
+                name: TelescopeDetailsPage.routeName,
+                path: TelescopeDetailsPage.routeName,
+                builder: (context, state) => TelescopeDetailsPage(
+                  id: state.extra! as String,
                 ),
-              ]
-            ),
-          ]
-        ),
-      ]
-  );
+              ),
+              GoRoute(
+                name: UserProfilePage.routeName,
+                path: UserProfilePage.routeName,
+                builder: (context, state) => const UserProfilePage(),
+              ),
+              GoRoute(
+                name: OrderPage.routeName,
+                path: OrderPage.routeName,
+                builder: (context, state) => const OrderPage(),
+              ),
+              GoRoute(
+                  name: CartPage.routeName,
+                  path: CartPage.routeName,
+                  builder: (context, state) => CartPage(),
+                  routes: [
+                    GoRoute(
+                      name: CheckoutPage.routeName,
+                      path: CheckoutPage.routeName,
+                      builder: (context, state) => CheckoutPage(),
+                    ),
+                  ]),
+            ]),
+      ]);
 }
