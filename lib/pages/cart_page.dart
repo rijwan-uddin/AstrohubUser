@@ -1,9 +1,11 @@
 import 'package:astrohub_user/customwidgets/cart_item_view.dart';
 import 'package:astrohub_user/utils/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/cart_provider.dart';
+import 'checkout_page.dart';
 
 class CartPage extends StatefulWidget {
   static const String routeName = 'cart';
@@ -44,7 +46,8 @@ class _CartPageState extends State<CartPage> {
                         style: Theme.of(context).textTheme.headlineLarge,
                       ),
                     ),
-                    OutlinedButton(onPressed: provider.totalItemsInCart == 0  ? null : (){},
+                    OutlinedButton(onPressed: provider.totalItemsInCart == 0  ? null : (){ context.pop();
+                    context.goNamed(CheckoutPage.routeName);},
                       child: Text('Checkout'),
                     ),
                   ],
